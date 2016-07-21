@@ -1,4 +1,4 @@
-#! /usr/bin/env/ python3
+#! /usr/bin/env/ python
 
 import argparse
 import codecs
@@ -32,7 +32,7 @@ def write_csv(outfile, data):
             "pda",
             "ut",
             ]
-        
+
     for k in keys:
         try:
             headers.append(FIELDS[k]['human'])
@@ -58,7 +58,7 @@ def write_csv(outfile, data):
                         dialect = 'excel',
                         quoting = csv.QUOTE_ALL)
     writer.writerows(output)
-    
+
 parser = argparse.ArgumentParser(description = 'Interface with the Mozscape API to provide link metrics')
 parser.add_argument('src', help = 'specify a text file with URLs')
 parser.add_argument('dest', help = 'specify an output file')
@@ -68,14 +68,14 @@ def main():
 
     with open('./keys.json', 'r') as k:
         keys = json.load(k)
-        
+
     p = Pyscape(**keys)
-    
+
     urls = []
     with open(args.src, 'r') as s:
         for line in s:
             urls.append(line.rstrip())
-    
+
     data = []
     for batch in batch_urls(urls, 10):
         data.extend(p.batch_url_metrics(batch).json())
